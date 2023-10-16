@@ -1,7 +1,9 @@
 import React from 'react'
 import './SignIn.css'
+import { useSignInWithEmailAndPassword } from '../hooks/auth/useSignInWithEmailAndPassword';
 
-function SignIn() {
+function SignIn() {  
+	const signInMutation = useSignInWithEmailAndPassword(); 
 
 	function sendForm(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault(); // Evita que el formulario se envíe automáticamente.
@@ -16,8 +18,17 @@ function SignIn() {
 	}
 	
 	function signIn(email: string, password: string) {
-		console.log("Email: " + email);
-		console.log("Password: " + password);
+		signInMutation.mutate(
+            { email, password },
+            {
+                onSuccess: () => {
+                    console.log("Sucess")
+                },
+                onError: (error: any) => {
+                	console.log("Error: ", error);
+                },
+            }
+        )
 	}
 
 	return (

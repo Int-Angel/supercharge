@@ -1,7 +1,9 @@
 import React from 'react'
 import './SignUp.css'
+import { useSignUpWithEmailAndPassword } from '../hooks/auth/useSignUpWithEmailAndPassword';
 
 function SignUp() {
+    const signUpMutation = useSignUpWithEmailAndPassword();
 
     function sendForm(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault(); // Evita que el formulario se envíe automáticamente.
@@ -17,16 +19,24 @@ function SignUp() {
         const confirmPassword = confirmPasswordInput.value;
 
         if(password === confirmPassword) {
-		    signIn(username, email, password);
+		    signUp(username, email, password);
         } else {
             console.log("Please check your password, your password doesn't match")
         }
 	}
 	
-	function signIn(username: string, email: string, password: string) {
-        console.log("Username: " + username);
-		console.log("Email: " + email);
-		console.log("Password: " + password);
+	function signUp(username: string, email: string, password: string) {
+        signUpMutation.mutate(
+            { email, password, username },
+            {
+                onSuccess: () => {
+                    console.log("Sucess")
+                },
+                onError: (error: any) => {
+                    console.log("Error: ", error);
+                },
+            }
+        )
 	}
 
     return (
