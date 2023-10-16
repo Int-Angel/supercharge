@@ -56,15 +56,19 @@
         padding: 3px 5px;
 
         color: $text-light;
-        font-size: 10px;
+        font-size: 12px;
 
         margin-left: 34px;
-
 
         transition: all 0.2s ease-in-out;
         &:hover{
             background: #f8f9ff;
         }
+    }
 
+    .TodoListAddTodoInputContainer{
+        width: 85%;
+        margin-left: 34px;
+        margin-top: 5px;
     }
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./style.scss";
 import { ChevronDown, ChevronRight, Plus } from "react-feather";
 import Todo from "../Todo/Todo";
+import CreateTodoInput from "../CreateTodoInput/CreateTodoInput";
 
 interface Props {
   id: string;
@@ -10,6 +11,8 @@ interface Props {
 
 export default function TodoList({ id, title }: Props) {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [addTodo, setAddTodo] = useState(false);
+
   const Icon = isExpanded ? ChevronDown : ChevronRight;
 
   return (
@@ -44,10 +47,25 @@ export default function TodoList({ id, title }: Props) {
         </div>
       ) : null}
 
-      <div className="TodoListAddButton">
-        <Plus className="TodoListAddIcon" size={16} />
-        <p className="TodoListAddText">Add a todo</p>
-      </div>
+      {addTodo ? (
+        <div className="TodoListAddTodoInputContainer">
+          <CreateTodoInput
+            onConfirm={() => {}}
+            onCancel={() => setAddTodo(false)}
+            newTodo={true}
+          />
+        </div>
+      ) : (
+        <div
+          className="TodoListAddButton"
+          onClick={() => {
+            setAddTodo(true);
+          }}
+        >
+          <Plus className="TodoListAddIcon" size={16} />
+          <p className="TodoListAddText">Add a todo</p>
+        </div>
+      )}
     </div>
   );
 }
