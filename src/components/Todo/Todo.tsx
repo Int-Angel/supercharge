@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./style.scss";
 
 import { Check } from "react-feather";
+import TodoDetailsModal from "../TodoDetailsModal/TodoDetailsModal";
 
 interface Props {
   id: string;
@@ -20,10 +21,11 @@ export default function Todo({
   start_time,
   end_time,
 }: Props) {
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showCheckmark, setShowCheckmark] = useState(false);
 
   return (
-    <div className="TodoContainer">
+    <div className="TodoContainer" onClick={() => setShowDetailsModal(true)}>
       <div
         className={`roundedCheckboxToDoContainer`}
         onMouseEnter={() => {
@@ -62,6 +64,17 @@ export default function Todo({
         )}
       </div>
       <div className="TodoDescription">{description}</div>
+      <TodoDetailsModal
+        open={showDetailsModal}
+        onClose={() => setShowDetailsModal(false)}
+        onConfirm={() => {}}
+        id={id}
+        description={description}
+        completed={completed}
+        priority={priority}
+        start_time={start_time}
+        end_time={end_time}
+      />
     </div>
   );
 }
