@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fontsource/poppins": "^5.0.8",
     "@supabase/supabase-js": "^2.38.1",
     "@tanstack/react-query": "^4.36.1",
     "@testing-library/jest-dom": "^5.17.0",

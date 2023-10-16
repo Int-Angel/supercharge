@@ -3,8 +3,10 @@ import './SignIn.css'
 
 function SignIn() {
 	return (
-		<div className='SignInBox'>
-			Welcome Back
+		<div className='signInBox'>
+			<div className='titleSignIn'>
+				Welcome back! 🙌
+			</div>
 			<div className="inputContainerBox">
 				<div className='inputLabel'>
 					Email

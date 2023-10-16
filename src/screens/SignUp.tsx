@@ -3,10 +3,14 @@ import './SignUp.css'
 
 function SignUp() {
     return (
-		<div className='SignInBox'>
-			Join Now!
+		<div className='signInBox'>
+			<div className='titleSignIn'>
+                  Sign Up
+            </div>
 			<div className="inputContainerBox">
-                Create an account! 🚀
+                <div className='medText'>
+                    Create an account! 🚀
+                </div>
                 <div className='inputLabel'>
 					Username
 				</div>

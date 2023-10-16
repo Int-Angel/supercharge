@@ -11,15 +11,18 @@ function LogIn() {
                 <header className='logo'>
                     <img src={require('../assets/supercharge_logo.png')} alt='supercharge_logo' width={'15%'}></img>
                 </header>
-                <body className='box'>
+                <div className='box'>
                     {pageState ? <SignIn/> : <SignUp/>}
                     <div className='noAccount' onClick={() => setPageState(!pageState)}>
                         <div>
-                            {pageState ? "Don't have an account? - Sign Up" : "Already have an account? - Sign In"}
+                            {pageState ? "Don't have an account?" : "Already have an account?"}
                         </div>
                     </div>
-                </body>
-                
+                    <div className='googleOr'>
+                        <img src={require('../assets/or.png')} alt='orGoogle' width={'80%'}/>
+                    </div>
+                   <img style={{cursor: "pointer", paddingTop: '10px'}} src={ pageState ? require('../assets/signup_google.png') : require('../assets/signin_google.png')} alt='googlelogo' width={'80%'} onClick={() => null}/>
+                </div>
             </section>
             <footer className='legend'>
                 Organize your day & supercharge your productivity ⚡ 
