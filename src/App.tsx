@@ -12,7 +12,7 @@ function App() {
         padding: 0,
       }}
     >
-      <Dashboard />
+      <LogIn />
     </div>
   );
 }

@@ -3,7 +3,9 @@
     flex-direction: column;
     background-color: #0D2D5C;
     height: 100vh;
-    font-family: 'Poppins';
+    text-align: center;
+    justify-content: center;
+    font-family: 'Poppins', Times, serif;
 }
 
 .container {
@@ -21,12 +23,14 @@
 }
 
 .box {
+    flex: 1;
     background-color: white;
     width: 30%;
     height:fit-content;
     border-radius: 10px;
     padding: 10px;
     margin: auto;
+    justify-content: center;
 }
 
 .legend {
