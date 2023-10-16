@@ -1,12 +1,17 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
 import LogIn from "./screens/LogIn";
+import Dashboard from "./screens/Dashboard/Dashboard";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   return (
-    <div className="App">
-      <LogIn />
+    <div
+      style={{
+        margin: 0,
+        padding: 0,
+      }}
+    >
+      <Dashboard />
     </div>
   );
 }
