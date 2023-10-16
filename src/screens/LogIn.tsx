@@ -5,7 +5,6 @@ import SignUp from './SignUp'
 
 function LogIn() {
     const [pageState, setPageState] = useState(true);
-
     return (
         <section className="screen">
             <section className='container'>
@@ -15,11 +14,10 @@ function LogIn() {
                 <body className='box'>
                     {pageState ? <SignIn/> : <SignUp/>}
                 </body>
-                <footer className='legend'>
-                    Organize your day & supercharge your productivity ⚡ 
-                </footer>
             </section>
-            <button onClick={() => setPageState(!pageState)}>Hello </button>
+            <footer className='legend'>
+                Organize your day & supercharge your productivity ⚡ 
+            </footer>
         </section>
     )
 }
