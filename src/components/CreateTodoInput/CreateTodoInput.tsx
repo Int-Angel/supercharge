@@ -2,6 +2,8 @@ import React from "react";
 import "./style.scss";
 import Button from "../Button/Button";
 import PriorityMenu from "../PriorityMenu/PriorityMenu";
+import { Flag } from "react-feather";
+import DropDownButton from "../DropDownButton/DropDownButton";
 
 interface Props {
   onConfirm: (description: string, priority?: number) => void;
@@ -22,10 +24,14 @@ export default function CreateTodoInput({
     initialDescription || "",
   );
   const [priority, setPriority] = React.useState(initialPriority || -1);
-  const [showPriority, setShowPriority] = React.useState(true);
+  const [showPriority, setShowPriority] = React.useState(false);
 
   const handleConfirm = () => {
     onConfirm(description, priority);
+  };
+
+  const togglePriority = () => {
+    setShowPriority(!showPriority);
   };
 
   return (
@@ -39,6 +45,19 @@ export default function CreateTodoInput({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+        </div>
+
+        <div className="CreateTodoInput_Input_Buttons">
+          <div>
+            <DropDownButton
+              text={priority === -1 ? "Add priority" : `Priority ${priority}`}
+              icon={Flag}
+              iconColor={priorityFlagColorMap.get(priority)}
+              onClick={togglePriority}
+              initialSelection={priority}
+              onClear={() => setPriority(-1)}
+            />
+          </div>
         </div>
 
         {showPriority && (
@@ -60,3 +79,11 @@ export default function CreateTodoInput({
     </div>
   );
 }
+
+const priorityFlagColorMap = new Map<number, string>([
+  [-1, "#2F2F2F"],
+  [0, "#2F2F2F"],
+  [1, "#5d7bff"],
+  [2, "#fccf5c"],
+  [3, "#ff1010"],
+]);

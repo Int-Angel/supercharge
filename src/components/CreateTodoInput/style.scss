@@ -28,6 +28,16 @@
         box-sizing: border-box; /* Opera/IE 8+ */
         box-sizing: border-box; /* css3 rec */
 
+        .CreateTodoInput_Input_Buttons{
+            display: flex;
+            flex-direction: row;
+            width: wrap-content;
+            align-self: flex-start;
+            gap: 5px;
+
+            margin-top: 5px;
+        }
+
         .CreateTodoInput_Input_Task_Name{
             border: none;
             outline: none;
@@ -45,7 +55,7 @@
         .CreateTodoInput_Priority{
             position: absolute;
             z-index: 3;
-            margin-top: 40px;
+            margin-top: 60px;
             margin-left: -10px;
         }
     }
