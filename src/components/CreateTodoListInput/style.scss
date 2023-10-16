@@ -1,0 +1,74 @@
+@import '../../colors.scss';
+
+.CreateTodoListInput_Container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+
+    .CreateTodoListInput_Input_Container{
+        border: 1px solid $gray-light;
+
+        display: flex;
+        flex-direction: column;
+
+        background-color: $white;
+
+        border-radius: 6px;
+        padding: 10px;
+
+        height: fit-content;
+
+        -ms-box-sizing: border-box; /* ie8 */
+        -khtml-box-sizing: border-box; /* konqueror */
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box; /* Firefox, other Gecko */
+        box-sizing: border-box; /* Opera/IE 8+ */
+        box-sizing: border-box; /* css3 rec */
+
+        .CreateTodoListInput_Input_Task_Name{
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: $text-dark;
+            &:focus {
+                border: none;
+            }
+            &::placeholder {
+                color: $gray;
+            }
+        }
+    }
+    .CreateTodoListInput_Buttons{
+        display: flex;
+        flex-direction: row;
+        width: wrap-content;
+        align-self: flex-end;
+        gap: 3px;
+    }
+}
+
+.CreateTodoListInputHighlightInputContainer{
+    //position: fixed;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .CreateTodoListInput_Input_Input_Container{
+        //position:absolute;
+        //z-index: 3;
+    }
+
+    .CreateTodoListInput_Highlight_Container{
+        //margin-left: 2px;
+        padding-left: 2px;
+        padding-right: 2px;
+        opacity: 0.6;
+        margin-bottom: 30px;
+        position: absolute;
+        pointer-events: none;
+    }
+}
