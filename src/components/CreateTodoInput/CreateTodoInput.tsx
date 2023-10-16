@@ -53,7 +53,10 @@ export default function CreateTodoInput({
               text={priority === -1 ? "Add priority" : `Priority ${priority}`}
               icon={Flag}
               iconColor={priorityFlagColorMap.get(priority)}
-              onClick={togglePriority}
+              onClick={(e: any) => {
+                e.stopPropagation();
+                togglePriority();
+              }}
               initialSelection={priority}
               onClear={() => setPriority(-1)}
             />
@@ -68,6 +71,7 @@ export default function CreateTodoInput({
                 setPriority(p);
                 setShowPriority(false);
               }}
+              onCloseMenu={() => setShowPriority(false)}
             />
           </div>
         )}

@@ -1,23 +1,40 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Flag } from "react-feather";
 import "./style.scss";
 import { Check } from "react-feather";
+import listenForOutsideClicks from "../../hooks/listen-for-outside-clicks";
 
 interface Props {
   onClick: (priority: number) => void;
   selectedPriority: number;
+  onCloseMenu: () => void;
 }
 
 export default function PriorityMenu({
   onClick,
   selectedPriority,
+  onCloseMenu,
 }: Props): JSX.Element {
+  const menuRef = useRef(null);
+  const [listening, setListening] = React.useState(false);
+
+  useEffect(
+    () =>
+      listenForOutsideClicks({
+        listening,
+        setListening,
+        menuRef,
+        onCloseMenu,
+      })(),
+    [listening, onCloseMenu],
+  );
+
   const handleClick = (e: any) => {
     e.stopPropagation();
   };
 
   return (
-    <div className="PriorityMenuContainer" onClick={handleClick}>
+    <div className="PriorityMenuContainer" onClick={handleClick} ref={menuRef}>
       <div
         className="PriorityMenu__item"
         onClick={() => {

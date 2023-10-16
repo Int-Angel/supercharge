@@ -7,7 +7,7 @@ interface Props {
   icon: any;
   iconColor?: string;
   initialSelection?: number;
-  onClick?: () => void;
+  onClick?: any;
   onClear?: () => void;
 }
 
