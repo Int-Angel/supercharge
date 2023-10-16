@@ -21,14 +21,11 @@
 
 .box {
     background-color: white;
+    width: 30%;
+    height: 80%;
     border-radius: 10px;
-    width: fit-content;
-    text-align: center;
-    align-items: center;
-    align-self: center;
-    justify-content: center;
-    text-align: center;
     padding: 10px;
+    margin: auto;
 }
 
 .legend {

@@ -33,11 +33,6 @@ function SignUp() {
 				</div>
 			</div>
 			<button className='signInButton'> Create Account </button>
-			<div className='noAccount'>
-				<div>
-					Don't have an account? Sign Up
-				</div>
-			</div>
 		</div>
 	)
 }

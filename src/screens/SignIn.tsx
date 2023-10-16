@@ -20,11 +20,6 @@ function SignIn() {
 				</div>
 			</div>
 			<button className='signInButton'> Sign In </button>
-			<div className='noAccount'>
-				<div>
-					Don't have an account? Sign Up
-				</div>
-			</div>
 		</div>
 	)
 }

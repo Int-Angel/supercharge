@@ -13,7 +13,13 @@ function LogIn() {
                 </header>
                 <body className='box'>
                     {pageState ? <SignIn/> : <SignUp/>}
+                    <div className='noAccount' onClick={() => setPageState(!pageState)}>
+                        <div>
+                            {pageState ? "Don't have an account? - Sign Up" : "Already have an account? - Sign In"}
+                        </div>
+                    </div>
                 </body>
+                
             </section>
             <footer className='legend'>
                 Organize your day & supercharge your productivity ⚡ 
