@@ -12,7 +12,7 @@ function App() {
         padding: 0,
       }}
     >
-      <LogIn />
+      <Dashboard />
       {/* <LogIn/> */}
     </div>
   );

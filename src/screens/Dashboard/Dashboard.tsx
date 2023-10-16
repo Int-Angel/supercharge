@@ -1,8 +1,7 @@
 import React from "react";
 import "./style.scss";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import Button from "../../components/Button/Button";
-import Todo from "../../components/Todo/Todo";
+import TodoList from "../../components/TodoList/TodoList";
 
 export default function Dashboard() {
   return (
@@ -15,12 +14,7 @@ export default function Dashboard() {
           left: "50%",
         }}
       >
-        <Todo
-          id="1"
-          description="todo description"
-          completed={false}
-          priority={3}
-        />
+        <TodoList id="1" title="Todo List Title" />
       </div>
     </div>
   );
