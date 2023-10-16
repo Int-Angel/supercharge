@@ -1,6 +1,7 @@
 @import '../../colors.scss';
 
 .CreateTodoInput_Container{
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -39,6 +40,13 @@
             &::placeholder {
                 color: $gray;
             }
+        }
+
+        .CreateTodoInput_Priority{
+            position: absolute;
+            z-index: 3;
+            margin-top: 40px;
+            margin-left: -10px;
         }
     }
     .CreateTodoInput_Buttons{

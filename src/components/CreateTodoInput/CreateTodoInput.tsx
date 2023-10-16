@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.scss";
 import Button from "../Button/Button";
+import PriorityMenu from "../PriorityMenu/PriorityMenu";
 
 interface Props {
   onConfirm: (description: string, priority?: number) => void;
@@ -21,6 +22,7 @@ export default function CreateTodoInput({
     initialDescription || "",
   );
   const [priority, setPriority] = React.useState(initialPriority || -1);
+  const [showPriority, setShowPriority] = React.useState(true);
 
   const handleConfirm = () => {
     onConfirm(description, priority);
@@ -38,6 +40,18 @@ export default function CreateTodoInput({
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
+
+        {showPriority && (
+          <div className="CreateTodoInput_Priority">
+            <PriorityMenu
+              selectedPriority={priority}
+              onClick={(p) => {
+                setPriority(p);
+                setShowPriority(false);
+              }}
+            />
+          </div>
+        )}
       </div>
       <div className="CreateTodoInput_Buttons">
         <Button text="Cancel" onClick={onCancel} variant="secondary" />
