@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function TodoList({ id, title }: Props) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const Icon = isExpanded ? ChevronDown : ChevronRight;
 
   return (
