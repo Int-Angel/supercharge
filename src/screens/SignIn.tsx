@@ -3,9 +3,29 @@ import './SignIn.css'
 
 function SignIn() {
 	return (
-		<section>
-			SignIn
-		</section>
+		<div className='SignInBox'>
+			Welcome Back
+			<div className="inputContainerBox">
+				<div className='inputLabel'>
+					Email
+				</div>
+				<div>
+					<input type='text' placeholder='e.g. email@email.com' id='email' className='inputBox'/>
+				</div>
+				<div  className='inputLabel'>
+					Password
+				</div>
+				<div>
+					<input type='password' placeholder='e.g. password 'className='inputBox'/>
+				</div>
+			</div>
+			<button className='signInButton'> Sign In </button>
+			<div className='noAccount'>
+				<div>
+					Don't have an account? Sign Up
+				</div>
+			</div>
+		</div>
 	)
 }
 

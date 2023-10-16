@@ -1,29 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './LogIn.css'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 
 function LogIn() {
-  return (
-    <div className="screen">
-        <header>
-            <section className='logo'>
-                Logo
+    const [pageState, setPageState] = useState(true);
+
+    return (
+        <section className="screen">
+            <section className='container'>
+                <header className='logo'>
+                    <img src={require('../assets/supercharge_logo.png')} alt='supercharge_logo' width={'15%'}></img>
+                </header>
+                <body className='box'>
+                    {pageState ? <SignIn/> : <SignUp/>}
+                </body>
+                <footer className='legend'>
+                    Organize your day & supercharge your productivity ⚡ 
+                </footer>
             </section>
-        </header>
-        <body>
-            <section className='Box'>
-                <SignIn/>
-                <SignUp/>
-            </section>
-        </body>
-        <footer>
-            <section className='legend'>
-                Legend
-            </section>
-        </footer>
-    </div>
-  )
+            <button onClick={() => setPageState(!pageState)}>Hello </button>
+        </section>
+    )
 }
 
 export default LogIn
