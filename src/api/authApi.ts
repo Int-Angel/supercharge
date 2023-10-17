@@ -1,7 +1,7 @@
 import { supabaseClient } from "./supabase-client";
 
 const HOST = process.env.REACT_APP_ENVIRONMENT === "development" ? process.env.REACT_APP_LOCALHOST : process.env.REACT_APP_HOST;
-const REDIRECT_TO = HOST + '/calendar';
+const REDIRECT_TO = HOST + '/';
 
 export async function signInWithGoogle() {
     let redirectTo = REDIRECT_TO;

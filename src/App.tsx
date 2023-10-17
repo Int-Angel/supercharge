@@ -1,20 +1,19 @@
-import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogIn from "./screens/LogIn";
 import Dashboard from "./screens/Dashboard/Dashboard";
-import Sidebar from "./components/Sidebar/Sidebar";
 import "@fontsource/poppins";
+import { AuthProvider } from "./contexts/AuthProvider";
 
 function App() {
   return (
-    <div
-      style={{
-        margin: 0,
-        padding: 0,
-      }}
-    >
-      <Dashboard />
-      {/* <LogIn/> */}
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path={"/"} element={<Dashboard />} />
+          <Route path={"/login"} element={<LogIn />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
