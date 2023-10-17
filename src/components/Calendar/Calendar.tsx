@@ -1,171 +1,238 @@
-import React, {useState, useMemo, useCallback} from "react";
-import { Calendar, Views, momentLocalizer } from 'react-big-calendar'
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
-import {EventInteractionArgs} from 'react-big-calendar/lib/addons/dragAndDrop.js'
-import events from './events.js'
+import React, { useState, useMemo, useCallback, useEffect } from "react";
+import { Calendar, Views, momentLocalizer } from "react-big-calendar";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
-import moment from 'moment'
+import moment from "moment";
 import "./style.scss";
-import 'react-big-calendar/lib/css/react-big-calendar.css'
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { useGetTodoListsFromUserWithTodos } from "../../hooks/todo/useGetTodoListsFromUserWithTodos";
+import { useAuth } from "../../contexts/AuthProvider";
+import { useUpdateTodo } from "../../hooks/todo/useUpdateTodo";
+import { useDraggedEvent } from "../../DraggedEventprovider.js";
 
-const DnDCalendar = withDragAndDrop(Calendar)
+const DnDCalendar = withDragAndDrop(Calendar);
 
-const localizer = momentLocalizer(moment)
+const localizer = momentLocalizer(moment);
 
-function onEventDrop({event, start, end, isAllDay}: EventInteractionArgs<Event>) {console.log("Hello")}
-function onEventResize({event, start, end, isAllDay}: EventInteractionArgs<Event>) {console.log("Hello")}
-function onDragStart({event}: any) {console.log("Hello")}
+type TTodo = {
+  id: string;
+  description: string;
+  list_position: number;
+  completed: boolean;
+  priority: number;
+  start_time: Date;
+  end_time: Date;
+};
 
-interface Item {
-  name: string;
-  val: number;
-}
+type TCalendarEvent = {
+  isDraggable: boolean;
+  id: string;
+  title: string;
+  allDay: boolean;
+  start: Date;
+  end: Date;
+  desc?: undefined;
+};
 
 export default function CalendarMod() {
+  const draggedEvent = useDraggedEvent();
 
-  const adjEvents = events.map((it, ind) => ({
-    ...it,
-    isDraggable: ind % 2 === 0,
-  }))
+  const [displayDragItemInCell, setDisplayDragItemInCell] = useState(true);
+  const [myEvents, setMyEvents] = useState<Array<TCalendarEvent>>([]);
+  const { id } = useAuth();
+  const [todosCalendar, setTodosCalendar] = useState<Array<TCalendarEvent>>();
+  const mutation = useUpdateTodo();
 
-  const [draggedEvent, setDraggedEvent] = useState<any | null>()
-  const [displayDragItemInCell, setDisplayDragItemInCell] = useState(true)
-  const [myEvents, setMyEvents] = useState(adjEvents)
+  useEffect(() => {
+    if (draggedEvent) {
+      console.log("Dragged Event:", draggedEvent);
+    }
+  }, [draggedEvent]);
+  
+  
+  const {
+    data: todoLists,
+    isError,
+    isLoading,
+    refetch,
+  } = useGetTodoListsFromUserWithTodos(id);
 
-  console.log(myEvents)
-  const defaultDate = useMemo(() => new Date(2015, 3, 12), [])
+  useEffect(() => {
+    if (Array.isArray(todoLists)) {
+      const todosCalendar: Array<TCalendarEvent> = [];
+      todoLists.forEach(todoList => {
+        if (Array.isArray(todoList.todo)) {
+          todoList.todo.forEach((todo: TTodo) => {
+            if (todo.start_time != null) {
+              const todoCalendar = {
+                isDraggable: true,
+                id: todo.id,
+                title: todo.description,
+                allDay: false,
+                start: new Date(todo.start_time),
+                end: new Date(todo.end_time),
+              };
+              todosCalendar.push(todoCalendar);
+            }
+          });
+        }
+        setTodosCalendar(todosCalendar)
+      });
+    }
+  }, [todoLists, setTodosCalendar]);
 
+  const defaultDate = useMemo(() => new Date(), []);
+
+  /*
   const eventPropGetter = useCallback(
     (event: any) => ({
       ...(event.isDraggable
-        ? { className: 'isDraggable' }
-        : { className: 'nonDraggable' }),
+        ? { className: "isDraggable" }
+        : { className: "nonDraggable" }),
     }),
-    []
-  )
+    [],
+  );
+  */
 
-  const dragFromOutsideItem = useCallback(() => draggedEvent, [draggedEvent])
+  const eventPropGetter = () => {
+    var backgroundColor = "#039BE5";
+    var style = {
+      backgroundColor: backgroundColor,
+      borderRadius: "8px",
+      opacity: 1,
+      color: "white",
+      border: "1px solid #039BE5",
+      borderLeft: "3px solid #004F75",
+    };
+    return {
+      style: style,
+    };
+  };
 
-  const handleDragStart = useCallback((event: any) => setDraggedEvent(event), [])
+  // const dragFromOutsideItem = useCallback(() => draggedEvent, [draggedEvent]);
 
-  const customOnDragOver = useCallback(
-    (dragEvent: any) => {
-      // check for undroppable is specific to this example
-      // and not part of API. This just demonstrates that
-      // onDragOver can optionally be passed to conditionally
-      // allow draggable items to be dropped on cal, based on
-      // whether event.preventDefault is called
-      if (draggedEvent !== 'undroppable') {
-        console.log('preventDefault')
-        dragEvent.preventDefault()
-      }
-    },
-    [draggedEvent]
-  )
+  // const handleDragStart = useCallback(
+  //   (event: any) => draggedEvent(event),
+  //   [draggedEvent],
+  // );
+
+  // const customOnDragOver = useCallback(
+  //   (dragEvent: any) => {
+  //     // check for undroppable is specific to this example
+  //     // and not part of API. This just demonstrates that
+  //     // onDragOver can optionally be passed to conditionally
+  //     // allow draggable items to be dropped on cal, based on
+  //     // whether event.preventDefault is called
+  //     if (draggedEvent !== "undroppable") {
+  //       console.log("preventDefault");
+  //       dragEvent.preventDefault();
+  //     }
+  //   },
+  //   [draggedEvent],
+  // );
 
   const moveEvent = useCallback(
     ({ event, start, end, isAllDay: droppedOnAllDaySlot = false }: any) => {
-      const { allDay } = event
+      const { allDay } = event;
       if (!allDay && droppedOnAllDaySlot) {
-        event.allDay = true
+        event.allDay = true;
       }
 
       setMyEvents((prev: any) => {
-        const existing = prev.find((ev: any) => ev.id === event.id) ?? {}
-        const filtered = prev.filter((ev: any) => ev.id !== event.id)
-        return [...filtered, { ...existing, start, end, allDay }]
-      })
+        const existing = prev.find((ev: any) => ev.id === event.id) ?? {};
+        const filtered = prev.filter((ev: any) => ev.id !== event.id);
+        const val = [...filtered, { ...existing, start, end }]
+        const l = val.length
+
+        const startWithOffset = new Date(val[l-1].start.getTime() - (val[l-1].start.getTimezoneOffset() * 60000)).toISOString();
+        const endWithOffset = new Date(val[l-1].end.getTime() - (val[l-1].end.getTimezoneOffset() * 60000)).toISOString();
+
+        mutation.mutate({
+          todo_id: event.id,
+          start_time:startWithOffset,
+          end_time: endWithOffset,
+        });
+        return val
+      });
     },
-    [setMyEvents]
-  )
+    [setMyEvents, mutation],
+  );
 
   const newEvent = useCallback(
     (event: any) => {
       setMyEvents((prev) => {
-        const idList = prev.map((item) => item.id)
-        const newId = Math.max(...idList) + 1
-        return [...prev, { ...event, id: newId }]
-      })
+        const idList = prev.map((item) => item.id);
+        //const newId = Math.max(...idList) + 1
+        return [...prev, { ...event, id: "newId" }];
+      });
     },
-    [setMyEvents]
-  )
-
+    [setMyEvents],
+  );
+  
   const onDropFromOutside = useCallback(
-    ({ start, end, allDay: isAllDay }: any) => {
-      if (draggedEvent === 'undroppable') {
-        setDraggedEvent(null)
-        return
-      }
+    ({ start, end }: any) => {
+      const {id} = draggedEvent.draggedEvent;
 
-      const { title } = draggedEvent
-      const event = {
-        title,
-        start,
-        end,
-        isAllDay,
-      }
-      setDraggedEvent(null)
-      newEvent(event)
+      const startWithOffset = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString();
+      const endWithOffset = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString();
+
+      mutation.mutate({
+        todo_id: id,
+        start_time:startWithOffset,
+        end_time: endWithOffset,
+      });
+      draggedEvent.setDraggedEvent(null);
     },
-    [draggedEvent, setDraggedEvent, newEvent]
-  )
+    [draggedEvent, mutation],
+  );
 
   const resizeEvent = useCallback(
     ({ event, start, end }: any) => {
       setMyEvents((prev: any) => {
         const existing = prev.find((ev: any) => ev.id === event.id) ?? {}
         const filtered = prev.filter((ev: any) => ev.id !== event.id)
-        return [...filtered, { ...existing, start, end }]
+        const val = [...filtered, { ...existing, start, end }]
+        const l = val.length
+
+        const startWithOffset = new Date(val[l-1].start.getTime() - (val[l-1].start.getTimezoneOffset() * 60000)).toISOString();
+        const endWithOffset = new Date(val[l-1].end.getTime() - (val[l-1].end.getTimezoneOffset() * 60000)).toISOString();
+
+        mutation.mutate({
+          todo_id: event.id,
+          start_time:startWithOffset,
+          end_time: endWithOffset,
+        });
+        return val
       })
     },
-    [setMyEvents]
-  )
-
-  const items = [
-    {
-      name: "Arrastrame hacia el calendario",
-      val: 0
-    },
-    {
-      name: "Arrastrame hacia el calendario 2",
-      val: 0
-    }
-  ]
+    [setMyEvents, mutation]
+  );
 
   return (
-    <div style={{justifyContent: 'center', margin: 'auto'}}>
-      <div>
-        {Object.entries(items).map(([name, val]) => (
-          <div
-            draggable="true"
-            key={name}
-            onDragStart={() =>
-              handleDragStart({ title: val.name })
-            }
-          >
-            {val.name}
-          </div>
-        ))}
-      </div>
+    <div
+      style={{
+        justifyContent: "center",
+        margin: "auto",
+        width: "80%",
+        height: "100%",
+      }}
+    >
       <DnDCalendar
         defaultDate={defaultDate}
         defaultView={Views.WEEK}
         localizer={localizer}
-        events={myEvents}
-        style={{ height: '700px', width: '1000px'}}
-
+        events={todosCalendar}
+        style={{ height: "100%", width: "100%" }}
         eventPropGetter={eventPropGetter}
-        onDragOver={customOnDragOver}
+        //onDragOver={customOnDragOver}
         onEventDrop={moveEvent}
         onSelectSlot={newEvent}
         onDropFromOutside={onDropFromOutside}
         onEventResize={resizeEvent}
         //draggableAccessor="isDraggable"
-        selectable
         resizable
       />
     </div>
   );
 }
-

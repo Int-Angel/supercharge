@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { ProfileIcon, MoonIcon, SettingsIcon } from "../../Icons";
 import { useSignOut } from "../../hooks/auth/useSignOut";
 
-export default function Sidebar() {
+interface SidebarProps {
+  setIsModalOpen: (value: React.SetStateAction<boolean>) => void;
+}
+
+export default function Sidebar({ setIsModalOpen }: SidebarProps) {
   const navigate = useNavigate();
   const signOutMutation = useSignOut();
 
@@ -19,6 +23,10 @@ export default function Sidebar() {
     });
   }
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="SidebarContainer">
       <div className="SidebarLogoContainer">
@@ -29,7 +37,7 @@ export default function Sidebar() {
         <div className="SidebarButtonContainer" onClick={handleSignOut}>
           <ProfileIcon className="SidebarButtonIcon" />
         </div>
-        <div className="SidebarButtonContainer">
+        <div className="SidebarButtonContainer" onClick={openModal}>
           <MoonIcon className="SidebarButtonIcon" />
         </div>
         <div className="SidebarButtonContainer">
