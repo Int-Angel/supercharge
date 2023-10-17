@@ -22,7 +22,7 @@ function LogIn() {
                     <div className='googleOr'>
                         <img src={require('../assets/or.png')} alt='orGoogle' width={'80%'}/>
                     </div>
-                   <img style={{cursor: "pointer", paddingTop: '10px'}} src={ pageState ? require('../assets/signup_google.png') : require('../assets/signin_google.png')} alt='googlelogo' width={'80%'} onClick={() => signInWithGoogle()}/>
+                   <img style={{cursor: "pointer", paddingTop: '10px'}} src={ pageState ? require('../assets/signin_google.png') : require('../assets/signup_google.png')} alt='googlelogo' width={'80%'} onClick={() => signInWithGoogle()}/>
                 </div>
             </section>
             <footer className='legend'>
