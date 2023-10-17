@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalContainer from "../ModalContainer/ModalContainer";
 import Todo from "../Todo/Todo";
 import "./style.scss";
-import { X, Check, Flag } from "react-feather";
+import { X, Check, Flag, Calendar } from "react-feather";
 import { useMarkTodoAsCompleted } from "../../hooks/todo/useMarkTodoAsCompleted";
+import DropDownButton from "../DropDownButton/DropDownButton";
+import { format } from "date-fns";
+import PriorityMenu from "../PriorityMenu/PriorityMenu";
+import { useUpdateTodo } from "../../hooks/todo/useUpdateTodo";
 
 interface Props {
   open: boolean;
@@ -18,15 +22,34 @@ export default function TodoDetailsModal({
   id,
   description,
   completed,
-  priority,
+  priority: initialPriority,
   start_time,
   end_time,
 }: Props & React.ComponentProps<typeof Todo>) {
   const [showCheckmark, setShowCheckmark] = useState(false);
+  const [showPriority, setShowPriority] = React.useState(false);
+  const [priority, setPriority] = React.useState(initialPriority || 0);
+
   const markTodoAsCompleted = useMarkTodoAsCompleted();
+  const updateTodoMutation = useUpdateTodo();
 
   const handleMarkTodoAsCompleted = (todo_id: string) => {
     markTodoAsCompleted.mutate({ todo_id: todo_id });
+  };
+
+  const handleUpdateTodo = (newPriority: number) => {
+    updateTodoMutation.mutate({
+      todo_id: id,
+      description: description,
+      priority: newPriority,
+      start_time: start_time,
+      end_time: end_time,
+      completed: completed,
+    });
+  };
+
+  const togglePriority = () => {
+    setShowPriority(!showPriority);
   };
 
   return (
@@ -75,44 +98,51 @@ export default function TodoDetailsModal({
             <div className="TodoDetailsModalContainer--Right--Item--Title">
               Start Time
             </div>
-            <div className="TodoDetailsModalContainer--Right--Item--Value">
-              {start_time || "N/A"}
-            </div>
+            <DropDownButton
+              text={"add start time"}
+              icon={Calendar}
+              onClick={() => {}}
+              initialSelection={-1}
+              onClear={() => {}}
+              iconColor={"#2F2F2F"}
+            />
           </div>
 
           <div className="TodoDetailsModalContainer--Right--Item">
             <div className="TodoDetailsModalContainer--Right--Item--Title">
               End Time
             </div>
-            <div className="TodoDetailsModalContainer--Right--Item--Value">
-              {end_time || "N/A"}
-            </div>
+            <DropDownButton
+              text={"add end time"}
+              icon={Calendar}
+              onClick={() => {}}
+              initialSelection={-1}
+              onClear={() => {}}
+              iconColor={"#2F2F2F"}
+            />
           </div>
 
           <div className="TodoDetailsModalContainer--Right--Item">
             <div className="TodoDetailsModalContainer--Right--Item--Title">
               Priority
             </div>
-            <div className="TodoDetailsModalContainer--Right--Item--Value">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  gap: "8px",
-                  marginTop: "-10px",
-                }}
-              >
-                <Flag
-                  color={priorityFlagColorMap.get(priority)}
-                  strokeWidth={2}
-                  size={16}
-                />
-                <p>Priority {priority}</p>
-              </div>
-            </div>
+            <DropDownButton
+              text={priority === -1 ? "Add priority" : `Priority ${priority}`}
+              icon={Flag}
+              iconColor={priorityFlagColorMap.get(priority)}
+              onClick={(e: any) => {
+                e.stopPropagation();
+                togglePriority();
+              }}
+              initialSelection={priority}
+              onClear={() => {
+                setPriority(0);
+                handleUpdateTodo(0);
+              }}
+            />
           </div>
         </div>
+
         <X
           className="TodoDetailsModalContainer--Close"
           onClick={onClose}
@@ -120,6 +150,19 @@ export default function TodoDetailsModal({
           color="#6A6A6A"
         />
       </div>
+      {showPriority && (
+        <div className="Details_Priority">
+          <PriorityMenu
+            selectedPriority={priority}
+            onClick={(p) => {
+              setPriority(p);
+              handleUpdateTodo(p);
+              setShowPriority(false);
+            }}
+            onCloseMenu={() => setShowPriority(false)}
+          />
+        </div>
+      )}
     </ModalContainer>
   );
 }
