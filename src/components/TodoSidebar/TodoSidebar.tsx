@@ -10,14 +10,12 @@ import { useGetTodoListsFromUserWithTodos } from "../../hooks/todo/useGetTodoLis
 export default function TodoSidebar() {
   const { id } = useAuth();
   const [showNewListInput, setShowNewListInput] = React.useState(false);
-
   const {
     data: todoLists,
     isError,
     isLoading,
     refetch,
   } = useGetTodoListsFromUserWithTodos(id);
-
   const createTodoListMutation = useCreateTodoList();
 
   const scrollToAddSection = () => {

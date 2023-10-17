@@ -65,13 +65,15 @@ export async function createTodo(
     start_time?: string,
     end_time?: string,
 ){
+    let priorityValue = priority ? priority : 0;
+    priorityValue = priorityValue < 0 ? 0 : priorityValue;
     const { data: todo, error } = await supabaseClient
         .from(TODO)
         .insert([
             {
                 todo_list_id: todoList_id,
                 description: description,
-                priority: priority,
+                priority: priorityValue,
                 start_time: start_time,
                 end_time: end_time,
                 list_position: 0,

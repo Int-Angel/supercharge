@@ -3,6 +3,7 @@ import "./style.scss";
 import { ChevronDown, ChevronRight, Plus } from "react-feather";
 import Todo from "../Todo/Todo";
 import CreateTodoInput from "../CreateTodoInput/CreateTodoInput";
+import { useCreateTodo } from "../../hooks/todo/useCreateTodo";
 
 interface Props {
   id: string;
@@ -13,9 +14,23 @@ interface Props {
 export default function TodoList({ id, title, todos }: Props) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [addTodo, setAddTodo] = useState(false);
+  const createTodoMutation = useCreateTodo();
+
+  const handleCreateTodo = (description: string, priority?: number) => {
+    createTodoMutation.mutate(
+      { todoList_id: id, description: description, priority: priority },
+      {
+        onSuccess: () => {
+          setAddTodo(false);
+        },
+        onError: (error: any) => {
+          console.log("Error: ", error);
+        },
+      },
+    );
+  };
 
   const Icon = isExpanded ? ChevronDown : ChevronRight;
-
   return (
     <div className="TodoListContainer">
       <div className="TodoListTitleContainer">
@@ -42,7 +57,7 @@ export default function TodoList({ id, title, todos }: Props) {
       {addTodo ? (
         <div className="TodoListAddTodoInputContainer">
           <CreateTodoInput
-            onConfirm={() => {}}
+            onConfirm={handleCreateTodo}
             onCancel={() => setAddTodo(false)}
             newTodo={true}
           />
