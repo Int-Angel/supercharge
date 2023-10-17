@@ -7,9 +7,10 @@ import CreateTodoInput from "../CreateTodoInput/CreateTodoInput";
 interface Props {
   id: string;
   title: string;
+  todos: any[];
 }
 
-export default function TodoList({ id, title }: Props) {
+export default function TodoList({ id, title, todos }: Props) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [addTodo, setAddTodo] = useState(false);
 
@@ -26,24 +27,15 @@ export default function TodoList({ id, title }: Props) {
       </div>
       {isExpanded ? (
         <div className="TodoListList">
-          <Todo
-            id="1"
-            description="todo description"
-            completed={false}
-            priority={3}
-          />
-          <Todo
-            id="1"
-            description="todo description"
-            completed={false}
-            priority={3}
-          />
-          <Todo
-            id="1"
-            description="todo description"
-            completed={false}
-            priority={3}
-          />
+          {todos.map((todo) => (
+            <Todo
+              id={todo.id}
+              description={todo.description}
+              completed={todo.completed}
+              priority={todo.priority}
+              key={todo.id}
+            />
+          ))}
         </div>
       ) : null}
 

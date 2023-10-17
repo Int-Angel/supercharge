@@ -5,10 +5,19 @@ import TodoList from "../TodoList/TodoList";
 import CreateTodoListInput from "../CreateTodoListInput/CreateTodoListInput";
 import { useCreateTodoList } from "../../hooks/todo/useCreateTodoList";
 import { useAuth } from "../../contexts/AuthProvider";
+import { useGetTodoListsFromUserWithTodos } from "../../hooks/todo/useGetTodoListsFromUserWithTodos";
 
 export default function TodoSidebar() {
   const { id } = useAuth();
   const [showNewListInput, setShowNewListInput] = React.useState(false);
+
+  const {
+    data: todoLists,
+    isError,
+    isLoading,
+    refetch,
+  } = useGetTodoListsFromUserWithTodos(id);
+
   const createTodoListMutation = useCreateTodoList();
 
   const scrollToAddSection = () => {
@@ -59,13 +68,14 @@ export default function TodoSidebar() {
         className="TodoSidebarTodoListsContainer"
         id="toDoListContainerRectangle"
       >
-        <TodoList id="1" title="List 1" />
-        <TodoList id="1" title="List 2" />
-        <TodoList id="1" title="List 3" />
-        <TodoList id="1" title="List 4" />
-        <TodoList id="1" title="List 5" />
-        <TodoList id="1" title="List 6" />
-        <TodoList id="1" title="List 7" />
+        {todoLists?.map((todoList) => (
+          <TodoList
+            id={todoList.id}
+            title={todoList.title}
+            key={todoList.id}
+            todos={todoList.todo}
+          />
+        ))}
 
         {showNewListInput ? (
           <div
