@@ -44,6 +44,7 @@ export default function CalendarMod() {
   const [myEvents, setMyEvents] = useState<Array<TCalendarEvent>>([]);
   const { id } = useAuth();
   const [todosCalendar, setTodosCalendar] = useState<Array<TCalendarEvent>>();
+  const mutation = useUpdateTodo();
 
   const {
     data: todoLists,
@@ -136,10 +137,21 @@ export default function CalendarMod() {
       setMyEvents((prev: any) => {
         const existing = prev.find((ev: any) => ev.id === event.id) ?? {};
         const filtered = prev.filter((ev: any) => ev.id !== event.id);
-        return [...filtered, { ...existing, start, end, allDay }];
+        const val = [...filtered, { ...existing, start, end }]
+        const l = val.length
+
+        const startWithOffset = new Date(val[l-1].start.getTime() - (val[l-1].start.getTimezoneOffset() * 60000)).toISOString();
+        const endWithOffset = new Date(val[l-1].end.getTime() - (val[l-1].end.getTimezoneOffset() * 60000)).toISOString();
+
+        mutation.mutate({
+          todo_id: event.id,
+          start_time:startWithOffset,
+          end_time: endWithOffset,
+        });
+        return val
       });
     },
-    [setMyEvents],
+    [setMyEvents, mutation],
   );
 
   const newEvent = useCallback(
@@ -172,8 +184,6 @@ export default function CalendarMod() {
     },
     [draggedEvent, setDraggedEvent, newEvent],
   );
-
-  const mutation = useUpdateTodo();
 
   const resizeEvent = useCallback(
     ({ event, start, end }: any) => {
