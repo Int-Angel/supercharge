@@ -32,7 +32,8 @@ export async function getTodoListsFromUserWithTodos(user_id?: string){
     const { data: todoLists, error } = await supabaseClient
         .from(TODO_LIST)
         .select('* , todo(*)')
-        .eq('user_id', user_id);
+        .eq('user_id', user_id)
+        .eq('todo.completed', false);
 
     if (error) throw error;
     return todoLists;

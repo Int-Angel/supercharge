@@ -63,7 +63,9 @@ export default function Todo({
           </>
         )}
       </div>
-      <div className="TodoDescription">{description}</div>
+      <div className={`TodoDescription ${completed ? "todoCompleted" : ""}`}>
+        {description}
+      </div>
       <TodoDetailsModal
         open={showDetailsModal}
         onClose={() => setShowDetailsModal(false)}
