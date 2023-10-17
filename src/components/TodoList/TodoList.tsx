@@ -48,6 +48,8 @@ export default function TodoList({ id, title, todos }: Props) {
               description={todo.description}
               completed={todo.completed}
               priority={todo.priority}
+              start_time={todo.start_time}
+              end_time={todo.end_time}
               key={todo.id}
             />
           ))}

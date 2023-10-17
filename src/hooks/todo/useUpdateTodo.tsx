@@ -15,8 +15,8 @@ export function useUpdateTodo() {
       todo_id: string;
       description?: string;
       priority?: number;
-      start_time?: string;
-      end_time?: string;
+      start_time?: string | null;
+      end_time?: string | null;
       completed?: boolean;
     }) =>
       updateTodo(

@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
+import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import ModalContainer from "../ModalContainer/ModalContainer";
 import Todo from "../Todo/Todo";
-import "./style.scss";
-import { X, Check, Flag, Calendar } from "react-feather";
+import { X, Check, Flag } from "react-feather";
+import { format } from "date-fns";
 import { useMarkTodoAsCompleted } from "../../hooks/todo/useMarkTodoAsCompleted";
 import DropDownButton from "../DropDownButton/DropDownButton";
-import { format } from "date-fns";
 import PriorityMenu from "../PriorityMenu/PriorityMenu";
 import { useUpdateTodo } from "../../hooks/todo/useUpdateTodo";
+
+import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
+
+import "./style.scss";
 
 interface Props {
   open: boolean;
   onClose: () => any;
   onConfirm: (description: string) => any;
 }
+
+type ValuePiece = Date | null;
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function TodoDetailsModal({
   open,
@@ -23,12 +32,14 @@ export default function TodoDetailsModal({
   description,
   completed,
   priority: initialPriority,
-  start_time,
-  end_time,
+  start_time: initial_start_time,
+  end_time: initial_end_time,
 }: Props & React.ComponentProps<typeof Todo>) {
   const [showCheckmark, setShowCheckmark] = useState(false);
   const [showPriority, setShowPriority] = React.useState(false);
   const [priority, setPriority] = React.useState(initialPriority || 0);
+
+  const [datesRange, setDatesRange] = useState<Value>([null, null]);
 
   const markTodoAsCompleted = useMarkTodoAsCompleted();
   const updateTodoMutation = useUpdateTodo();
@@ -42,8 +53,6 @@ export default function TodoDetailsModal({
       todo_id: id,
       description: description,
       priority: newPriority,
-      start_time: start_time,
-      end_time: end_time,
       completed: completed,
     });
   };
@@ -51,6 +60,39 @@ export default function TodoDetailsModal({
   const togglePriority = () => {
     setShowPriority(!showPriority);
   };
+
+  useEffect(() => {
+    if (initial_start_time === "" || initial_end_time === "") return;
+    if (initial_start_time && initial_end_time) {
+      setDatesRange([new Date(initial_start_time), new Date(initial_end_time)]);
+    }
+  }, [initial_start_time, initial_end_time]);
+
+  useEffect(() => {
+    if (datesRange === null) {
+      updateTodoMutation.mutate({
+        todo_id: id,
+        start_time: null,
+        end_time: null,
+      });
+      return;
+    }
+    if (!Array.isArray(datesRange)) return;
+    const start_time =
+      datesRange[0] === null
+        ? ""
+        : format(datesRange[0], "yyyy-MM-dd HH:mm:ss");
+    const end_time =
+      datesRange[1] === null
+        ? ""
+        : format(datesRange[1], "yyyy-MM-dd HH:mm:ss");
+
+    updateTodoMutation.mutate({
+      todo_id: id,
+      start_time: start_time,
+      end_time: end_time,
+    });
+  }, [datesRange]);
 
   return (
     <ModalContainer open={open} onClose={onClose}>
@@ -96,30 +138,9 @@ export default function TodoDetailsModal({
         <div className="TodoDetailsModalContainer--Right">
           <div className="TodoDetailsModalContainer--Right--Item">
             <div className="TodoDetailsModalContainer--Right--Item--Title">
-              Start Time
+              Time
             </div>
-            <DropDownButton
-              text={"add start time"}
-              icon={Calendar}
-              onClick={() => {}}
-              initialSelection={-1}
-              onClear={() => {}}
-              iconColor={"#2F2F2F"}
-            />
-          </div>
-
-          <div className="TodoDetailsModalContainer--Right--Item">
-            <div className="TodoDetailsModalContainer--Right--Item--Title">
-              End Time
-            </div>
-            <DropDownButton
-              text={"add end time"}
-              icon={Calendar}
-              onClick={() => {}}
-              initialSelection={-1}
-              onClear={() => {}}
-              iconColor={"#2F2F2F"}
-            />
+            <DateTimeRangePicker onChange={setDatesRange} value={datesRange} />
           </div>
 
           <div className="TodoDetailsModalContainer--Right--Item">
@@ -142,7 +163,6 @@ export default function TodoDetailsModal({
             />
           </div>
         </div>
-
         <X
           className="TodoDetailsModalContainer--Close"
           onClick={onClose}
