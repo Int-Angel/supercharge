@@ -1,0 +1,23 @@
+type Props = Record<string, any>;
+
+export default function listenForOutsideClicks({
+  listening,
+  setListening,
+  menuRef,
+  onCloseMenu,
+}: Props): () => void {
+  return () => {
+    if (listening) return;
+    if (!menuRef.current) return;
+    setListening(true);
+    ["click", "touchstart"].forEach(() => {
+      document.addEventListener("click", (evt) => {
+        const cur = menuRef.current;
+        const node = evt.target;
+        if (!cur) return;
+        if (cur?.contains(node)) return;
+        onCloseMenu();
+      });
+    });
+  };
+}

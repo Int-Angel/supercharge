@@ -1,17 +1,31 @@
+.signInBox{
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 20px;
+}
+
 .inputContainerBox{
     height: 90%;
-    background-color: aqua;
-    margin: 10px;
     flex-direction: column;
 }
 
 .inputBox{
-    width: 95%;
+    width: 100%;
+    height: 50px;
+    font-family: "Poppins";
+    border-color: #C9C9C9;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
+    margin-bottom: 15px;
 }
 
 .inputLabel{
-    padding-bottom: 5;
+    padding-bottom: 5px;
     text-align: left;
+    color: #2F2F2F;
+    font-weight: bold;
 }
 
 .signInButton{
@@ -22,8 +36,21 @@
     margin-top: 5px;
     padding: 5px;
     color: white;
+    height: 46px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color .4s;
 }
 
-.noAccount {
-    flex-direction: row;
+.signInButton:hover{
+    background-color: #0D2D5C;
+}
+
+.titleSignIn{
+    color:#0D2D5C;
+    font-size: 40px;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

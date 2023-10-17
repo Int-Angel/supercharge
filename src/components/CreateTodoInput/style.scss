@@ -1,0 +1,91 @@
+@import '../../colors.scss';
+
+.CreateTodoInput_Container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+
+    .CreateTodoInput_Input_Container{
+        border: 1px solid $gray-light;
+
+        display: flex;
+        flex-direction: column;
+
+        background-color: $white;
+
+        border-radius: 6px;
+        padding: 10px;
+
+        height: fit-content;
+
+        -ms-box-sizing: border-box; /* ie8 */
+        -khtml-box-sizing: border-box; /* konqueror */
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box; /* Firefox, other Gecko */
+        box-sizing: border-box; /* Opera/IE 8+ */
+        box-sizing: border-box; /* css3 rec */
+
+        .CreateTodoInput_Input_Buttons{
+            display: flex;
+            flex-direction: row;
+            width: wrap-content;
+            align-self: flex-start;
+            gap: 5px;
+
+            margin-top: 5px;
+        }
+
+        .CreateTodoInput_Input_Task_Name{
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: $text-dark;
+            &:focus {
+                border: none;
+            }
+            &::placeholder {
+                color: $gray;
+            }
+        }
+
+        .CreateTodoInput_Priority{
+            position: absolute;
+            z-index: 3;
+            margin-top: 60px;
+            margin-left: -10px;
+        }
+    }
+    .CreateTodoInput_Buttons{
+        display: flex;
+        flex-direction: row;
+        width: wrap-content;
+        align-self: flex-end;
+        gap: 3px;
+    }
+}
+
+.CreateTodoInputHighlightInputContainer{
+    //position: fixed;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .CreateTodoInput_Input_Input_Container{
+        //position:absolute;
+        //z-index: 3;
+    }
+
+    .CreateTodoInput_Highlight_Container{
+        //margin-left: 2px;
+        padding-left: 2px;
+        padding-right: 2px;
+        opacity: 0.6;
+        margin-bottom: 30px;
+        position: absolute;
+        pointer-events: none;
+    }
+}

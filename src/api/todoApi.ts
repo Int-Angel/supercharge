@@ -32,7 +32,8 @@ export async function getTodoListsFromUserWithTodos(user_id?: string){
     const { data: todoLists, error } = await supabaseClient
         .from(TODO_LIST)
         .select('* , todo(*)')
-        .eq('user_id', user_id);
+        .eq('user_id', user_id)
+        .eq('todo.completed', false);
 
     if (error) throw error;
     return todoLists;
@@ -65,13 +66,15 @@ export async function createTodo(
     start_time?: string,
     end_time?: string,
 ){
+    let priorityValue = priority ? priority : 0;
+    priorityValue = priorityValue < 0 ? 0 : priorityValue;
     const { data: todo, error } = await supabaseClient
         .from(TODO)
         .insert([
             {
                 todo_list_id: todoList_id,
                 description: description,
-                priority: priority,
+                priority: priorityValue,
                 start_time: start_time,
                 end_time: end_time,
                 list_position: 0,
@@ -110,6 +113,19 @@ export async function updateTodo(
         end_time: end_time,
         completed: completed,
     })
+    .eq('id', todo_id)
+    .select();
+
+    if (error) throw error;
+    return todo;
+}
+
+export async function markTodoAsCompleted(
+    todo_id:string,
+){
+    const { data: todo, error } = await supabaseClient
+    .from(TODO)
+    .update({ completed: true })
     .eq('id', todo_id)
     .select();
 

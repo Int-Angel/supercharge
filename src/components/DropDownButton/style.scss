@@ -1,0 +1,54 @@
+@import '../../colors.scss';
+
+.DropDownButton_Container{
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    width: fit-content;
+    height: fit-content;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    height: 25px;
+
+    transition: all 0.3s ease;
+
+    border: 1px solid $gray-light;
+    border-radius: 6px;
+
+    gap: 5px;
+
+    &:hover {
+        background-color: $gray-light;
+    }
+    
+    &:active {
+        background-color: $gray-light;
+    }
+
+    .DropDownButton_Icon{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .DropDownButton_Clear_Button{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+       
+        border-radius: 5px;
+
+        transition: all 0.2s ease-in-out;
+        &:hover {
+            background-color: $gray-light;
+        }
+    }
+}

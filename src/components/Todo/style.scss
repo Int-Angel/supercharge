@@ -1,0 +1,100 @@
+@import '../../colors.scss';
+
+.TodoContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    .TodoDescription{
+        font-size: 14px;
+        font-weight: 400;
+        color: $text-dark-2;
+    }
+
+    .todoCompleted{
+        text-decoration: line-through;
+        color: $text-dark;
+    }
+
+    cursor: pointer;
+    border-radius: 4px;
+    //padding: 10px 20px;
+    transition: all 0.2s ease-in-out;
+    &:hover{
+        background: #f8f9ff;
+    }
+}
+
+.roundedCheckboxToDoContainer {
+    display: block;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  
+    cursor: pointer;
+    .roundedCheckboxToDo {
+      width: 20px;
+      height: 20px;
+      border-radius: 25%;
+      vertical-align: middle;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+      cursor: pointer;
+  
+      transition: all 0.3s ease;
+  
+      &.priority-0{
+        border: 1px solid $gray;
+        background-color: white;
+  
+        &:checked {
+          background-color: $blue;
+          border: 1px solid $blue;
+        }
+      }
+  
+      &.priority-1{
+        border: 1px solid $blue;
+        background-color: rgba(87, 106, 255, 0.33);
+  
+        &:checked {
+          background-color: $blue;
+          border: 1px solid $blue;
+        }
+      }
+  
+      &.priority-2{
+        border: 1px solid $yellow;
+        background-color: rgba(252, 207, 92, 0.29);
+  
+        &:checked {
+          background-color: $yellow;
+          border: 1px solid $yellow;
+        }
+      }
+  
+      &.priority-3{
+        border: 1px solid $red;
+        background-color: rgba(255, 16, 16, 0.14);
+  
+        &:checked {
+          background-color: $red;
+          border: 1px solid $red;
+        }
+      }
+    }
+    .checkmark {
+      pointer-events: none;
+  
+      position: absolute;
+      top: 22%;
+      left: 25%;
+      height: 25px;
+      width: 25px;
+      //background-color: #eee;
+    }
+  }

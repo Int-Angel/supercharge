@@ -1,0 +1,60 @@
+@import '../../colors.scss';
+
+.TodoSidebarContainer{
+    height: 100%;
+    width: 450px;
+
+    background: $white;
+    border-right: 4px solid #C0C0C0;
+
+    .TodoSidebarHeader{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content:space-between;
+
+        width: 100%;
+
+        border-bottom: 2px solid #ECECEC;
+
+        h1{
+            font-size: 24px;
+            font-weight: 700;
+            color: $text-dark;
+
+            margin-top: 46px;
+            margin-bottom: 26px;
+            margin-left: 24px;
+        }
+
+        .TodoSidebarNewList{
+            color: $text-light;
+            cursor: pointer;
+
+            margin-top: 46px;
+            margin-bottom: 26px;
+            margin-right: 24px;
+        }
+    }
+
+    .TodoSidebarTodoListsContainer{
+        width: 100%;
+        height: 88%;
+        overflow-y: auto;
+
+        margin-left: 20px;
+
+        &::-webkit-scrollbar {
+            background-color: transparent;
+            width: 8px;
+        }
+
+        .TodoSidebarNewListInputContainer{
+            width: 85%;
+            margin-left: 35px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    }
+  
+}

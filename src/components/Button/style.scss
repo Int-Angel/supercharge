@@ -1,0 +1,33 @@
+@import '../../colors.scss';
+
+.ButtonZ{
+    font-weight: 700;
+    font-size: 12px;
+
+    border-radius: 6px;
+    border: none;
+    padding: 10px 20px;
+
+    cursor: pointer;
+    &--primary{
+        background: #1C70EE;
+        color: $white;
+
+        transition: all 0.2s ease-in-out;
+
+        &:hover{
+            background: #0D2D5C;
+        }
+    }
+
+    &--secondary{
+        background: #DCDCDC;
+        color: $text-dark-2;
+
+        transition: all 0.2s ease-in-out;
+
+        &:hover{
+            background: #c9c9c9;
+        }
+    }
+}

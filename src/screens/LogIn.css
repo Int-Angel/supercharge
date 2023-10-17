@@ -3,6 +3,9 @@
     flex-direction: column;
     background-color: #0D2D5C;
     height: 100vh;
+    text-align: center;
+    justify-content: center;
+    font-family: 'Poppins', Times, serif;
 }
 
 .container {
@@ -12,20 +15,22 @@
 
 .logo {
     flex: 1;
-    padding-top: 3%;
-    padding-left: 3%;
+    padding-top: 2%;
+    padding-left: 2%;
     align-items: left;
     justify-content: left;
     text-align: left;
 }
 
 .box {
+    flex: 1;
     background-color: white;
     width: 30%;
-    height: 80%;
+    height:fit-content;
     border-radius: 10px;
     padding: 10px;
     margin: auto;
+    justify-content: center;
 }
 
 .legend {
@@ -39,6 +44,39 @@
     padding-left: 10px;
     padding-bottom: 10px;
     padding-top: 10px;
-    border-top-left-radius: 10px;
+    border-top-left-radius: 15px;
+    font-size: calc(1px + 1.5vmin);
+    font-weight: bold;
+    color:#0D2D5C;
 }
 
+.noAccount {
+    display: inline-flex;
+    cursor: pointer;
+    color: #1C70EE;
+}
+
+.googleOr{
+    margin-top: 20px;
+}
+
+.googleButton{
+    border-radius: 5px;
+    background-color: #ffffff;
+    border-color: #C9C9C9;
+    border: 1;
+    margin-top: 5px;
+    padding: 5px;
+    color: rgb(0, 0, 0);
+    height: 46px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color .4s;
+    width: 80%;
+    flex-direction: row;
+}
+
+.googleButton:hover{
+    background-color: #0D2D5C;
+}

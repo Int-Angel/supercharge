@@ -1,0 +1,75 @@
+@import '../../colors.scss';
+
+.TodoListContainer{
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .TodoListTitleContainer{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        gap: 10px;
+
+        .TodoListIcon{
+            cursor: pointer;
+            color: $text-dark-2;
+        }
+
+        .TodoListTitle{
+            font-family: Poppins;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+
+            color: $text-dark-2;
+        }
+    }
+
+    .TodoListList{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        gap: 10px;
+
+        margin-left: 34px;
+    }
+
+    .TodoListAddButton{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        gap: 10px;
+        height: 25px;
+
+        cursor: pointer;
+        border-radius: 4px;
+        padding: 3px 5px;
+
+        color: $text-light;
+        font-size: 12px;
+
+        margin-left: 34px;
+
+        transition: all 0.2s ease-in-out;
+        &:hover{
+            background: #f8f9ff;
+        }
+    }
+
+    .TodoListAddTodoInputContainer{
+        width: 85%;
+        margin-left: 34px;
+        margin-top: 5px;
+    }
+}
