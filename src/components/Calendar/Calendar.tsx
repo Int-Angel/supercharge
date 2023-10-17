@@ -194,7 +194,7 @@ export default function CalendarMod() {
       style={{
         justifyContent: "center",
         margin: "auto",
-        width: "100%",
+        width: "80%",
         height: "100%",
       }}
     >
