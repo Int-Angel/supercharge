@@ -56,7 +56,7 @@ export default function TodoSidebar() {
   return (
     <div className="TodoSidebarContainer">
       <div className="TodoSidebarHeader">
-        <h1>Todo</h1>
+        <h1>To Dos</h1>
         <Plus
           className="TodoSidebarNewList"
           onClick={handleAddSectionWithScroll}

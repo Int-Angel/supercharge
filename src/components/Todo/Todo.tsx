@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import "./style.scss";
 
 import { Check } from "react-feather";
 import TodoDetailsModal from "../TodoDetailsModal/TodoDetailsModal";
 import { useMarkTodoAsCompleted } from "../../hooks/todo/useMarkTodoAsCompleted";
+import { useDraggedEvent } from "../../DraggedEventprovider";
 
 interface Props {
   id: string;
@@ -26,12 +27,26 @@ export default function Todo({
   const [showCheckmark, setShowCheckmark] = useState(false);
   const markTodoAsCompleted = useMarkTodoAsCompleted();
 
+  const draggedEvent = useDraggedEvent();
+
+  const handleDragStart = useCallback(() => {
+    // Set the draggedEvent when the drag starts
+    const event = { id };
+    draggedEvent.setDraggedEvent(event);
+  }, [draggedEvent, id]);
+
   const handleMarkTodoAsCompleted = (todo_id: string) => {
     markTodoAsCompleted.mutate({ todo_id: todo_id });
   };
 
   return (
-    <div className="TodoContainer" onClick={() => setShowDetailsModal(true)}>
+    <div 
+      draggable="true"
+      key={id}
+      onDragStart={handleDragStart}
+      className="TodoContainer"
+      onClick={() => setShowDetailsModal(true)}
+    >
       <div
         className={`roundedCheckboxToDoContainer`}
         onMouseEnter={() => {

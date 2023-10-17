@@ -4,6 +4,7 @@ import Dashboard from "./screens/Dashboard/Dashboard";
 import "@fontsource/poppins";
 import { AuthProvider } from "./contexts/AuthProvider";
 import RequireAuth from "./contexts/RequireAuth";
+import { DraggedEventProvider } from "./DraggedEventprovider";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
             path={"/"}
             element={
               <RequireAuth>
-                <Dashboard />
+                <DraggedEventProvider>
+                  <Dashboard />
+                </DraggedEventProvider>
               </RequireAuth>
             }
           />
