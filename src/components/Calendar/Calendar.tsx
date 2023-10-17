@@ -176,20 +176,6 @@ export default function CalendarMod() {
   const mutation = useUpdateTodo();
 
   const resizeEvent = useCallback(
-    // ({ event, start, end }: any) => {
-    //   console.log(event)
-    //   setMyEvents((prev: any) => {
-    //     const existing = prev.find((ev: any) => ev.id === event.id) ?? {};
-    //     const filtered = prev.filter((ev: any) => ev.id !== event.id);
-    //     mutation.mutate({
-    //       todo_id: event.id,
-    //       start_time: event.start.toISOString(),
-    //       end_time: event.end.toISOString(),
-    //     });
-    //     return [...filtered, { ...existing, start, end }];
-    //   });
-    // },
-    // [mutation],
     ({ event, start, end }: any) => {
       setMyEvents((prev: any) => {
         const existing = prev.find((ev: any) => ev.id === event.id) ?? {}
