@@ -6,17 +6,6 @@
   font-family: var(--font-current);
 }
 
-h1 {
-  font-family: "Kumbh Sans", sans-serif;
-  color: var(--text);
-  text-align: center;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 24px;
-  margin-top: 32px;
-}
-
 .controls {
   display: flex;
   justify-content: space-between;
@@ -209,20 +198,6 @@ button:focus:not(:focus-visible) {
   cursor: pointer;
 }
 
-h3 {
-  width: 100%;
-  text-align: center;
-  font-family: var(--font-default);
-  font-style: normal;
-  font-weight: bold;
-  font-size: 11px;
-  line-height: 11px;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 4.23077px;
-  color: var(--settings-heading);
-}
-
 .pane__time-settings,
 .pane__color-preference {
   margin-top: 28px;
@@ -234,37 +209,6 @@ h3 {
   grid-template-columns: 50% 50%;
   align-items: center;
   row-gap: 8px;
-}
-
-label {
-  font-family: var(--font-default);
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 12px;
-  color: var(--text-dark);
-  mix-blend-mode: normal;
-  opacity: 0.4;
-}
-
-input {
-  width: 140px;
-  height: 40px;
-  padding-left: 16px;
-  border: none;
-  border-radius: 10px;
-  background: var(--input-background);
-  font-family: var();
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 14px;
-  color: var(--text-dark);
-}
-
-input[type="number"]::-webkit-inner-spin-button:hover,
-input[type="number"]::-webkit-inner-spin-button:active {
-  opacity: 1;
 }
 
 /* hide radio inputs so the labels can be styled */
