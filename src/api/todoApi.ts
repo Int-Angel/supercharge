@@ -120,6 +120,19 @@ export async function updateTodo(
     return todo;
 }
 
+export async function markTodoAsCompleted(
+    todo_id:string,
+){
+    const { data: todo, error } = await supabaseClient
+    .from(TODO)
+    .update({ completed: true })
+    .eq('id', todo_id)
+    .select();
+
+    if (error) throw error;
+    return todo;
+}
+
 export async function deleteTodo(
     todo_id:string,
 ){

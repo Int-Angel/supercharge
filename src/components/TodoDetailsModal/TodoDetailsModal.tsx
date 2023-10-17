@@ -3,6 +3,7 @@ import ModalContainer from "../ModalContainer/ModalContainer";
 import Todo from "../Todo/Todo";
 import "./style.scss";
 import { X, Check, Flag } from "react-feather";
+import { useMarkTodoAsCompleted } from "../../hooks/todo/useMarkTodoAsCompleted";
 
 interface Props {
   open: boolean;
@@ -22,6 +23,12 @@ export default function TodoDetailsModal({
   end_time,
 }: Props & React.ComponentProps<typeof Todo>) {
   const [showCheckmark, setShowCheckmark] = useState(false);
+  const markTodoAsCompleted = useMarkTodoAsCompleted();
+
+  const handleMarkTodoAsCompleted = (todo_id: string) => {
+    markTodoAsCompleted.mutate({ todo_id: todo_id });
+  };
+
   return (
     <ModalContainer open={open} onClose={onClose}>
       <div className="TodoDetailsModalContainer">
@@ -42,9 +49,7 @@ export default function TodoDetailsModal({
               type="checkbox"
               className={`roundedCheckboxToDo2 priority2-${priority}`}
               checked={completed}
-              onChange={(val) => {
-                console.log("clicked: ", val);
-              }}
+              onChange={() => handleMarkTodoAsCompleted(id)}
             />
             {showCheckmark && !completed && (
               <span className="checkmark2">
