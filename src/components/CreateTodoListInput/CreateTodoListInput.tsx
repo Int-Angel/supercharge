@@ -19,6 +19,8 @@ export default function CreateTodoListInput({
 
   const handleConfirm = () => {
     onConfirm(title);
+    onCancel();
+    setTitle("");
   };
 
   return (
@@ -35,7 +37,14 @@ export default function CreateTodoListInput({
         </div>
       </div>
       <div className="CreateTodoListInput_Buttons">
-        <Button text="Cancel" onClick={onCancel} variant="secondary" />
+        <Button
+          text="Cancel"
+          onClick={() => {
+            onCancel();
+            setTitle("");
+          }}
+          variant="secondary"
+        />
         <Button text={newList ? "Add" : "Save"} onClick={handleConfirm} />
       </div>
     </div>
