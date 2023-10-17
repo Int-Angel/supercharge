@@ -10,6 +10,7 @@ import "./style.scss";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useGetTodoListsFromUserWithTodos } from "../../hooks/todo/useGetTodoListsFromUserWithTodos";
 import { useAuth } from "../../contexts/AuthProvider";
+import { useUpdateTodo } from "../../hooks/todo/useUpdateTodo";
 
 // ../../hooks/todo/useGetTodoListsFromUserWithTodos.js"
 
@@ -172,15 +173,42 @@ export default function CalendarMod() {
     [draggedEvent, setDraggedEvent, newEvent],
   );
 
+  const mutation = useUpdateTodo();
+
   const resizeEvent = useCallback(
+    // ({ event, start, end }: any) => {
+    //   console.log(event)
+    //   setMyEvents((prev: any) => {
+    //     const existing = prev.find((ev: any) => ev.id === event.id) ?? {};
+    //     const filtered = prev.filter((ev: any) => ev.id !== event.id);
+    //     mutation.mutate({
+    //       todo_id: event.id,
+    //       start_time: event.start.toISOString(),
+    //       end_time: event.end.toISOString(),
+    //     });
+    //     return [...filtered, { ...existing, start, end }];
+    //   });
+    // },
+    // [mutation],
     ({ event, start, end }: any) => {
       setMyEvents((prev: any) => {
-        const existing = prev.find((ev: any) => ev.id === event.id) ?? {};
-        const filtered = prev.filter((ev: any) => ev.id !== event.id);
-        return [...filtered, { ...existing, start, end }];
-      });
+        const existing = prev.find((ev: any) => ev.id === event.id) ?? {}
+        const filtered = prev.filter((ev: any) => ev.id !== event.id)
+        const val = [...filtered, { ...existing, start, end }]
+        const l = val.length
+
+        const startWithOffset = new Date(val[l-1].start.getTime() - (val[l-1].start.getTimezoneOffset() * 60000)).toISOString();
+        const endWithOffset = new Date(val[l-1].end.getTime() - (val[l-1].end.getTimezoneOffset() * 60000)).toISOString();
+
+        mutation.mutate({
+          todo_id: event.id,
+          start_time:startWithOffset,
+          end_time: endWithOffset,
+        });
+        return val
+      })
     },
-    [setMyEvents],
+    [setMyEvents, mutation]
   );
 
   return (
