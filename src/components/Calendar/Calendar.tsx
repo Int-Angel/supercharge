@@ -53,10 +53,9 @@ export default function CalendarMod() {
 
   useEffect(() => {
     if (Array.isArray(todoLists)) {
-      todoLists.forEach((todoList) => {
-        console.log(todoList.todo);
+      todoLists.forEach(todoList => {
+        const todosCalendar: Array<TCalendarEvent> = [];
         if (Array.isArray(todoList.todo)) {
-          const todosCalendar: Array<TCalendarEvent> = [];
           todoList.todo.forEach((todo: TTodo) => {
             if (todo.start_time != null) {
               const todoCalendar = {
@@ -68,15 +67,14 @@ export default function CalendarMod() {
                 end: new Date(todo.end_time),
               };
               todosCalendar.push(todoCalendar);
-              console.log(todo);
             } else {
               console.log("Not valid for calendar, rendering on todolist");
             }
           });
-          setTodosCalendar(todosCalendar);
         } else {
           console.log("todoList.todoList is not an array");
         }
+        setTodosCalendar(todosCalendar)
       });
     }
   }, [todoLists, setTodosCalendar]);
